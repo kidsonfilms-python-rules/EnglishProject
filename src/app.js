@@ -36,32 +36,53 @@ showSlides(slideIndex);
 
 // Next/previous controls
 function plusSlides(n) {
-  showSlides(slideIndex += n);
+    console.log("Moving to Slide Index: " + (slideIndex + n))
+    const slide3immersion = document.getElementById("slide-3-immersion");
+    if ((slideIndex + n) == 3) {
+        console.warn("STARTING IMMERSION 1")
+        slide3immersion.play()
+    } else if ((slideIndex + n) == 7) {
+        console.warn("STOPPING IMMERSION 1")
+        var fadeAudio = setInterval(function () {
+            // When volume at zero stop all the intervalling
+            if (slide3immersion.volume === 0.0) {
+                clearInterval(fadeAudio);
+                slide3immersion.pause();
+            } else if (slide3immersion.volume >= 0.025) {
+                slide3immersion.volume -= 0.025;
+                console.log(slide3immersion.volume)
+            } else {
+                slide3immersion.volume -= slide3immersion.volume;
+                console.log(slide3immersion.volume)
+            }
+        }, 50);
+    }
+    showSlides(slideIndex += n);
 }
 
 // Thumbnail image controls
 function currentSlide(n) {
-  showSlides(slideIndex = n);
+    showSlides(slideIndex = n);
 }
 
 function showSlides(n) {
-  var i;
-  var slides = document.getElementsByClassName("mySlides");
-  var dots = document.getElementsByClassName("dot");
-  if (n > slides.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-  }
-  for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "block";
-//   dots[slideIndex-1].className += " active";
+    var i;
+    var slides = document.getElementsByClassName("mySlides");
+    var dots = document.getElementsByClassName("dot");
+    if (n > slides.length) { slideIndex = 1 }
+    if (n < 1) { slideIndex = slides.length }
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+    slides[slideIndex - 1].style.display = "block";
+    //   dots[slideIndex-1].className += " active";
 }
 
-$(document).keypress(function(e) {
-    if(e.charCode == 103) {
+$(document).keypress(function (e) {
+    if (e.charCode == 103) {
         plusSlides(1)
     }
-  });
+});
