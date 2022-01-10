@@ -35,99 +35,99 @@ var slideIndex = 1;
 showSlides(slideIndex);
 var GRADING_MODE = confirm('Do you want to enter Presentation Mode or Grading Mode? \n\nPress "OK" for Grading Mode and "CANCEL" for Presentation Mode') ? true : false
 if (GRADING_MODE) {
-    if (prompt("Enter the Grading Entry Password (GEP)") != "REDACTED_FOR_SECURITY") {
-        alert("Wrong Password, reload the page to try again. Defaulting to Presentation Mode")
-        GRADING_MODE = false
-    }
+  if (prompt("Enter the Grading Entry Password (GEP)") != "REDACTED_FOR_SECURITY") {
+    alert("Wrong Password, reload the page to try again. Defaulting to Presentation Mode")
+    GRADING_MODE = false
+  }
 }
 
 // Next/previous controls
 function plusSlides(n) {
-    console.log("Moving to Slide Index: " + (slideIndex + n))
-    if (!GRADING_MODE && (slideIndex + n) == 3) { slideIndex = 6 }
-    else if (!GRADING_MODE && (slideIndex + n) == 5) { slideIndex = 2 }
-    else {slideIndex += n}
-    const slide3immersion = document.getElementById("slide-3-immersion");
-    const slide6immersion = document.getElementById("slide-6-immersion");
-    if (slideIndex == 3) {
-        console.warn("STARTING IMMERSION 1")
-        slide3immersion.play()
-    } else if (slideIndex == 6) {
-        console.warn("STOPPING IMMERSION 1")
-        var fadeAudio = setInterval(function () {
-            // When volume at zero stop all the intervalling
-            if (slide3immersion.volume === 0.0) {
-                clearInterval(fadeAudio);
-                slide3immersion.pause();
-                slide3immersion.volume = 1
-            } else if (slide3immersion.volume >= 0.025) {
-                slide3immersion.volume -= 0.025;
-                console.log(slide3immersion.volume)
-            } else {
-                slide3immersion.volume -= slide3immersion.volume;
-                console.log(slide3immersion.volume)
-            }
-        }, 50);
-        console.warn("STARTING IMMERSION 2")
-        slide6immersion.play()
-        slide6immersion.loop = true;
-        slide6immersion.volume = 0
-        var fadeinAudio = setInterval(function () {
-            // When volume at zero stop all the intervalling
-            if (slide6immersion.volume === 1) {
-                clearInterval(fadeinAudio);
-            } else if ((slide6immersion.volume + 0.025) <= 1) {
-                slide6immersion.volume += 0.025;
-                console.log(slide6immersion.volume)
-            } else {
-                slide6immersion.volume += (1 - slide6immersion.volume);
-                console.log(slide6immersion.volume)
-            }
-        }, 50);
-    } else if (slideIndex == 9) {
-        console.warn("STOPPING IMMERSION 2")
-        var fadeOutAudio = setInterval(function () {
-            // When volume at zero stop all the intervalling
-            if (slide6immersion.volume === 0.0) {
-                clearInterval(fadeOutAudio);
-                slide6immersion.pause();
-                slide6immersion.volume = 1
-            } else if (slide6immersion.volume >= 0.025) {
-                slide6immersion.volume -= 0.025;
-                console.log(slide6immersion.volume)
-            } else {
-                slide6immersion.volume -= slide6immersion.volume;
-                console.log(slide6immersion.volume)
-            }
-        }, 50);
+  console.log("Moving to Slide Index: " + (slideIndex + n))
+  if (!GRADING_MODE && (slideIndex + n) == 3) { slideIndex = 6 }
+  else if (!GRADING_MODE && (slideIndex + n) == 5) { slideIndex = 2 }
+  else { slideIndex += n }
+  const slide3immersion = document.getElementById("slide-3-immersion");
+  const slide6immersion = document.getElementById("slide-6-immersion");
+  if (slideIndex == 3) {
+    console.warn("STARTING IMMERSION 1")
+    slide3immersion.play()
+  } else if (slideIndex == 6) {
+    console.warn("STOPPING IMMERSION 1")
+    var fadeAudio = setInterval(function () {
+      // When volume at zero stop all the intervalling
+      if (slide3immersion.volume === 0.0) {
+        clearInterval(fadeAudio);
+        slide3immersion.pause();
+        slide3immersion.volume = 1
+      } else if (slide3immersion.volume >= 0.025) {
+        slide3immersion.volume -= 0.025;
+        console.log(slide3immersion.volume)
+      } else {
+        slide3immersion.volume -= slide3immersion.volume;
+        console.log(slide3immersion.volume)
+      }
+    }, 50);
+    console.warn("STARTING IMMERSION 2")
+    slide6immersion.play()
+    slide6immersion.loop = true;
+    slide6immersion.volume = 0
+    var fadeinAudio = setInterval(function () {
+      // When volume at zero stop all the intervalling
+      if (slide6immersion.volume === 1) {
+        clearInterval(fadeinAudio);
+      } else if ((slide6immersion.volume + 0.025) <= 1) {
+        slide6immersion.volume += 0.025;
+        console.log(slide6immersion.volume)
+      } else {
+        slide6immersion.volume += (1 - slide6immersion.volume);
+        console.log(slide6immersion.volume)
+      }
+    }, 50);
+  } else if (slideIndex == 9) {
+    console.warn("STOPPING IMMERSION 2")
+    var fadeOutAudio = setInterval(function () {
+      // When volume at zero stop all the intervalling
+      if (slide6immersion.volume === 0.0) {
+        clearInterval(fadeOutAudio);
+        slide6immersion.pause();
+        slide6immersion.volume = 1
+      } else if (slide6immersion.volume >= 0.025) {
+        slide6immersion.volume -= 0.025;
+        console.log(slide6immersion.volume)
+      } else {
+        slide6immersion.volume -= slide6immersion.volume;
+        console.log(slide6immersion.volume)
+      }
+    }, 50);
 
-    }
-    showSlides(slideIndex);
+  }
+  showSlides(slideIndex);
 }
 
 // Thumbnail image controls
 function currentSlide(n) {
-    showSlides(slideIndex = n);
+  showSlides(slideIndex = n);
 }
 
 function showSlides(n) {
-    var i;
-    var slides = document.getElementsByClassName("mySlides");
-    var dots = document.getElementsByClassName("dot");
-    if (n > slides.length) { slideIndex = 1 }
-    if (n < 1) { slideIndex = slides.length }
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
-    for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-    }
-    slides[slideIndex - 1].style.display = "block";
-    //   dots[slideIndex-1].className += " active";
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) { slideIndex = 1 }
+  if (n < 1) { slideIndex = slides.length }
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex - 1].style.display = "block";
+  //   dots[slideIndex-1].className += " active";
 }
 
 $(document).keypress(function (e) {
-    if (e.charCode == 103) {
-        plusSlides(1)
-    }
+  if (e.charCode == 103) {
+    plusSlides(1)
+  }
 });
